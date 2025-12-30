@@ -5,7 +5,7 @@ requires-python = ">=3.11"
 [[package]]
 name = "adw-framework"
 version = "0.1.0"
-source = { directory = "../adw-framework" }
+source = { directory = "../../../../../../adw-framework" }
 dependencies = [
     { name = "aiosqlite" },
     { name = "boto3" },
@@ -48,7 +48,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "adw-framework", directory = "../adw-framework" }]
+requires-dist = [{ name = "adw-framework", directory = "../../../../../../adw-framework" }]
 
 [[package]]
 name = "aiosqlite"

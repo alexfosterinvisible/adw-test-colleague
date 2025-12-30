@@ -8,4 +8,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-adw-framework = { path = "../adw-framework" }
+adw-framework = { path = "/Users/dev3/code4b/adw-framework" }
