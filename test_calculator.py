@@ -44,6 +44,35 @@ class TestCalculator(unittest.TestCase):
             calculator.divide(-5, 0)
         assert str(context.exception) == "Cannot divide by zero"
 
+    def test_sqrt(self):
+        """Test square root works correctly."""
+        # Perfect squares
+        assert abs(calculator.sqrt(4) - 2.0) < 0.0001
+        assert abs(calculator.sqrt(9) - 3.0) < 0.0001
+        assert abs(calculator.sqrt(16) - 4.0) < 0.0001
+
+        # Non-perfect squares
+        assert abs(calculator.sqrt(2) - 1.41421) < 0.001
+        assert abs(calculator.sqrt(3) - 1.73205) < 0.001
+
+        # Edge cases
+        assert calculator.sqrt(0) == 0.0
+        assert calculator.sqrt(1) == 1.0
+
+    def test_sqrt_negative(self):
+        """Test square root of negative number raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            calculator.sqrt(-1)
+        assert str(context.exception) == "Cannot calculate square root of negative number"
+
+        with self.assertRaises(ValueError) as context:
+            calculator.sqrt(-4)
+        assert str(context.exception) == "Cannot calculate square root of negative number"
+
+        with self.assertRaises(ValueError) as context:
+            calculator.sqrt(-10)
+        assert str(context.exception) == "Cannot calculate square root of negative number"
+
 
 if __name__ == "__main__":
     unittest.main()
