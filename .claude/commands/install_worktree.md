@@ -1,0 +1,83 @@
+# Install Worktree
+
+This command sets up an isolated worktree environment with custom port configuration.
+
+## PARAMETERS
+- Worktree path: {0}
+- Backend port: {1}
+- Frontend port: {2}
+
+## READ
+- [.adw.yaml] (from parent repo) - Source of truth for backend/frontend dirs and scripts (see `app.*`)
+- [.env.sample] (from parent repo)
+- [<backend_dir from [.adw.yaml]>/.env.sample] (from parent repo, if present)
+- [.mcp.json] (from parent repo)
+- [playwright-mcp-config.json] (from parent repo)
+
+## STEPS
+
+1. **Navigate to worktree directory**
+   ```bash
+   cd {0}
+   ```
+
+2. **Create port configuration file**
+   Create [.ports.env] with:
+   ```
+   BACKEND_PORT={1}
+   FRONTEND_PORT={2}
+   VITE_BACKEND_URL=http://localhost:{1}
+   ```
+
+3. **Copy and update .env files**
+   - Copy [.env] from parent repo if it exists
+   - Append [.ports.env] contents to [.env]
+   - Copy [<backend_dir from [.adw.yaml]>/.env] from parent repo if it exists
+   - Append [.ports.env] contents to [<backend_dir from [.adw.yaml]>/.env]
+
+4. **Copy and configure MCP files**
+   - Copy [.mcp.json] from parent repo if it exists
+   - Copy [playwright-mcp-config.json] from parent repo if it exists
+   - These files are needed for Model Context Protocol and Playwright automation
+   
+   After copying, update paths to use absolute paths:
+   - Get the absolute worktree path: `WORKTREE_PATH=$(pwd)`
+   - Update [.mcp.json]:
+     - Find the line containing ["./playwright-mcp-config.json"]
+     - Replace it with ["${WORKTREE_PATH}/playwright-mcp-config.json"]
+     - Use a JSON-aware tool or careful string replacement to maintain valid JSON
+   - Update [playwright-mcp-config.json]:
+     - Find the line containing ["dir": "./videos"]
+     - Replace it with ["dir": "${WORKTREE_PATH}/videos"]
+     - Create the videos directory: `mkdir -p ${WORKTREE_PATH}/videos`
+   - This ensures MCP configuration works correctly regardless of execution context
+
+5. **Install backend dependencies**
+   ```bash
+   cd <backend_dir from [.adw.yaml]> && uv sync --all-extras
+   ```
+
+6. **Install frontend dependencies**
+   ```bash
+   cd <frontend_dir from [.adw.yaml]> && bun install
+   ```
+
+7. **Setup database**
+   ```bash
+   cd {0} && ./<reset_db_script from [.adw.yaml]>
+   ```
+
+## ERROR_HANDLING
+- If parent [.env] files don't exist, create minimal versions from [.env.sample] files
+- Ensure all paths are absolute to avoid confusion
+
+## REPORT
+- List all files created/modified (including MCP configuration files)
+- Show port assignments
+- Confirm dependencies installed
+- Note any missing parent [.env] files that need user attention
+- Note any missing MCP configuration files
+- Show the updated absolute paths in:
+  - [.mcp.json] (should show full path to [playwright-mcp-config.json])
+  - [playwright-mcp-config.json] (should show full path to videos directory)
+- Confirm videos directory was created

@@ -1,0 +1,11 @@
+[project]
+name = "adw_test_colleague"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.11"
+dependencies = [
+    "adw-framework",
+]
+
+[tool.uv.sources]
+adw-framework = { path = "../adw-framework" }
