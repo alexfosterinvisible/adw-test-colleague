@@ -1,4 +1,4 @@
-# Feature: Add Divide Function to Calculator
+# Feature: Add divide function to calculator
 
 ## Metadata
 issue_number: `1`
@@ -6,95 +6,107 @@ adw_id: `de3d954e`
 issue_json: `{"number":1,"title":"Add divide function to calculator","body":"Add a divide(a, b) function to calculator.py that divides a by b. Should handle division by zero gracefully."}`
 
 ## Feature Description
-Add a divide function to the simple calculator module that performs division operations. The function will accept two numeric arguments and return the result of dividing the first by the second. The implementation will include proper error handling for division by zero, raising a clear and informative error rather than allowing the program to crash.
+Add a divide function to the calculator module that performs division operations with proper error handling for division by zero. The function should follow the existing pattern established by the add, subtract, and multiply functions in calculator.py, maintaining consistency in type hints and implementation style.
 
 ## User Story
-As a developer using the calculator module
-I want to perform division operations
-So that I can complete mathematical calculations that require division
+As a calculator user
+I want to divide two numbers
+So that I can perform division operations with confidence that division by zero is handled gracefully
 
 ## Problem Statement
-The current calculator.py module only supports addition, subtraction, and multiplication operations. Division is a fundamental arithmetic operation that is missing from the calculator's capabilities, limiting its usefulness for comprehensive mathematical computations.
+The calculator module currently supports addition, subtraction, and multiplication operations but lacks division functionality. Users need the ability to divide numbers with appropriate error handling to prevent runtime crashes when attempting to divide by zero.
 
 ## Solution Statement
-Implement a `divide(a: int, b: int) -> float` function that returns the quotient of a divided by b. The function will validate that the divisor (b) is not zero before performing the division operation. If b is zero, the function will raise a `ValueError` with a descriptive message explaining that division by zero is not allowed.
+Implement a divide function in calculator.py that takes two numeric arguments and returns their quotient. The function will check for division by zero and raise a descriptive ValueError with a clear error message. The implementation will match the existing code style with type hints for integers and return type.
 
 ## Relevant Files
 Use these files to implement the feature:
 
-- **calculator.py** - Main calculator module where the divide function will be added. This file currently contains add, subtract, and multiply functions following a consistent pattern that should be maintained for the new divide function.
+- **calculator.py** - Main calculator module where the divide function will be added. Currently contains add, subtract, and multiply functions following a consistent pattern with type hints (int parameters and int return type).
 
 ### New Files
-No new files are required for this feature. The divide function will be added to the existing calculator.py file.
+- **test_calculator.py** - New test file to be created with comprehensive unit tests for all calculator functions including the new divide function, edge cases, and division by zero handling.
 
 ## Implementation Plan
 ### Phase 1: Foundation
-No foundational work is needed. The existing calculator.py module already has the structure and patterns in place.
+Create a comprehensive test suite for the calculator module. This establishes test coverage for existing functionality (add, subtract, multiply) before adding new features, ensuring no regressions occur. The test file will use Python's unittest framework and include tests for normal operations, edge cases, and the division by zero scenario.
 
 ### Phase 2: Core Implementation
-Implement the divide function following the same pattern as existing functions (add, subtract, multiply) in calculator.py. Add proper type hints and include division by zero validation with appropriate error handling.
+Implement the divide function in calculator.py following the established pattern. The function will accept two integer parameters (a and b), check if b equals zero, raise a ValueError with message "Cannot divide by zero" if true, otherwise return a // b for integer division (matching the existing function signatures that work with integers).
 
 ### Phase 3: Integration
-Update the `__main__` block in calculator.py to demonstrate the divide function with example usage, including both successful division and edge cases.
+Update the calculator.py main block to demonstrate the new divide function alongside existing operations. Validate that all tests pass and the function integrates seamlessly with the existing module structure.
 
 ## Step by Step Tasks
+IMPORTANT: Execute every step in order, top to bottom.
 
-### Task 1: Implement the divide function
-- Read calculator.py to understand the existing function patterns
-- Add the divide function with signature: `def divide(a: int, b: int) -> float:`
-- Implement division by zero check that raises ValueError with message "Cannot divide by zero"
-- Return the result of a / b for valid inputs
-- Place the function after the multiply function to maintain consistency
+### 1. Create test infrastructure
+- Create test_calculator.py in the project root directory
+- Import unittest and calculator module
+- Create TestCalculator class inheriting from unittest.TestCase
+- Add test methods for existing functions: test_add, test_subtract, test_multiply
+- Each test should verify basic functionality with simple assertions
 
-### Task 2: Add demonstration in __main__ block
-- Update the `__main__` block to include example division operations
-- Add at least one successful division example (e.g., "10 / 2 = 5.0")
-- Optionally add a try-except block demonstrating division by zero handling
+### 2. Add division-specific tests
+- Create test_divide method to test normal division operations
+- Create test_divide_by_zero method using assertRaises to verify ValueError is raised
+- Verify error message content matches expected "Cannot divide by zero"
+- Add edge case tests: dividing zero by a number, negative number divisions
 
-### Task 3: Create unit tests
-- Create tests/test_calculator.py file with pytest tests
-- Add test for successful division: test_divide_success()
-- Add test for division by zero: test_divide_by_zero()
-- Add test for negative numbers: test_divide_negative()
-- Add test for division resulting in float: test_divide_float_result()
+### 3. Implement divide function
+- Add divide function to calculator.py after the multiply function
+- Add type hints: def divide(a: int, b: int) -> int
+- Implement zero check: if b == 0, raise ValueError("Cannot divide by zero")
+- Return integer division: return a // b
+- Maintain consistent spacing and style with existing functions
 
-### Task 4: Validate implementation
-- Run calculator.py to verify the __main__ block works correctly
-- Run pytest to ensure all tests pass
-- Verify the function follows the same patterns as existing functions
+### 4. Update main block demonstration
+- Add divide example to the if __name__ == "__main__" block
+- Include both a successful division and demonstrate proper usage pattern
+- Keep format consistent with existing print statements
+
+### 5. Run validation commands
+- Execute all validation commands listed below to ensure zero regressions
+- Verify all tests pass
+- Confirm calculator works end-to-end with manual testing
 
 ## Testing Strategy
 ### Unit Tests
-- **test_divide_success**: Verify divide(10, 2) returns 5.0
-- **test_divide_by_zero**: Verify divide(5, 0) raises ValueError with appropriate message
-- **test_divide_negative**: Verify divide(-10, 2) returns -5.0 and divide(10, -2) returns -5.0
-- **test_divide_float_result**: Verify divide(7, 2) returns 3.5
+- **test_add** - Verify addition works correctly (e.g., 2 + 3 = 5)
+- **test_subtract** - Verify subtraction works correctly (e.g., 5 - 3 = 2)
+- **test_multiply** - Verify multiplication works correctly (e.g., 2 * 3 = 6)
+- **test_divide** - Verify division works correctly (e.g., 6 / 3 = 2)
+- **test_divide_by_zero** - Verify ValueError is raised with correct message when dividing by zero
 
 ### Edge Cases
-- Division by zero (should raise ValueError)
-- Negative divisor and/or dividend
-- Division resulting in fractional values
-- Division where result is whole number (e.g., 10/2)
+- Division of zero by a non-zero number (should return 0)
+- Division with negative numbers (e.g., -6 / 3 = -2, 6 / -3 = -2, -6 / -3 = 2)
+- Division where result would be fractional using integer division (e.g., 7 / 3 = 2)
+- Division by zero from both positive and negative numerators
 
 ## Acceptance Criteria
-- The divide function is implemented in calculator.py with proper type hints
-- Division by zero raises a ValueError with message "Cannot divide by zero"
-- The function returns correct results for valid division operations
-- The function returns float type (not integer) to preserve precision
-- The __main__ block demonstrates the divide function
-- All unit tests pass without errors
-- The implementation follows the same code style and patterns as existing functions
+- divide function exists in calculator.py with proper type hints
+- divide function returns correct integer division results
+- divide function raises ValueError with message "Cannot divide by zero" when b=0
+- All unit tests pass with 100% success rate
+- test_calculator.py has comprehensive coverage of all calculator functions
+- Code style matches existing functions (spacing, type hints, formatting)
+- Main block demonstrates divide function usage
+- No regressions in existing add, subtract, multiply functions
 
 ## Validation Commands
 Execute every command to validate the feature works correctly with zero regressions.
 
-- `python calculator.py` - Run the calculator module to verify __main__ examples work
-- `pytest tests/test_calculator.py -v` - Run unit tests with verbose output to ensure all tests pass
-- `python -c "from calculator import divide; print(divide(10, 2)); print(divide(7, 3))"` - Quick validation of divide function
-- `python -c "from calculator import divide; divide(5, 0)"` - Verify ValueError is raised for division by zero (should see error)
+- `python -m pytest test_calculator.py -v` - Run all calculator tests with verbose output, verify zero failures
+- `python test_calculator.py` - Run tests using unittest directly, confirm all tests pass
+- `python calculator.py` - Execute main block to verify demonstrations work without errors
+- `python -c "from calculator import divide; print(divide(10, 2)); print(divide(7, 3))"` - Test divide function directly
+- `python -c "from calculator import divide; divide(5, 0)"` - Verify division by zero raises ValueError (should exit with error)
 
 ## Notes
-- Return type is float rather than int to preserve precision for non-whole number results
-- Following Python conventions, the function will use standard division (/) operator which returns float
-- The error message for division by zero should be clear and user-friendly
-- Consider adding docstrings to the divide function following the same pattern as other functions (if they exist)
+- The project uses uv for dependency management with Python >=3.11
+- No new dependencies are required for this feature
+- Using integer division (a // b) maintains consistency with the int type hints
+- Consider adding pytest as a dev dependency for better test output: `uv add --dev pytest`
+- The existing calculator.py uses a simple functional style without classes or decorators - maintain this pattern
+- Future enhancement: Consider supporting float division with a separate function or parameter
