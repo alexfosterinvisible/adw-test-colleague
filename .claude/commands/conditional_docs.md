@@ -23,3 +23,17 @@ This file tracks when specific documentation should be read based on the context
     - When working with sampling methods (bootstrap, confidence intervals)
     - When troubleshooting ValueError for empty datasets in statistics functions
     - When writing unit tests for statistical functions
+
+- app_docs/feature-d3cd90df-symbolic-math-engine.md
+  - Conditions:
+    - When working with symbolic_math.py or symbolic mathematics operations
+    - When parsing mathematical expressions into AST
+    - When implementing expression simplification or transformation
+    - When working with symbolic differentiation or integration
+    - When expanding algebraic expressions (binomial expansion)
+    - When solving linear or quadratic equations programmatically
+    - When generating LaTeX output from mathematical expressions
+    - When substituting variables in expressions for evaluation
+    - When troubleshooting SyntaxError for malformed expressions
+    - When troubleshooting ValueError for unsolvable equations
+    - When writing unit tests for symbolic math functions
